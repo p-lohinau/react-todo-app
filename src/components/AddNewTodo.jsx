@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 export default class AddNewTodo extends Component {
     constructor(props) {
@@ -7,6 +8,18 @@ export default class AddNewTodo extends Component {
             name: '',
             id: 0
         }
+    }
+
+    static defaultProps = {
+        buttonName: '',
+        placeHolder: '',
+        addTodo: null
+    }
+
+    static propTypes = {
+        buttonName: PropTypes.string,
+        placeHolder: PropTypes.string,
+        addTodo: PropTypes.func
     }
 
     handleChange = ({ target }) => {
