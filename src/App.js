@@ -40,6 +40,7 @@ class App extends Component {
     return (
       <div className="app">
         <h1>Todo list</h1>
+        <AddNewTodo placeHolder={'Let\'s add new todo'} buttonName={'Submit'} addTodo={this.addTodo} />
         <TodoList array={this.state.todoList} deleteTodoId={this.deleteTodo} className={'card-panel'} />
       </div>
     );
