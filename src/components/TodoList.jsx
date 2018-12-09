@@ -1,37 +1,37 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import 'materialize-css/dist/css/materialize.css';
 
-export default class TodoList extends Component {
+const TodoList = ({ array, className, deleteTodoId }) => {
 
-    static defaultProps = {
-        array: [],
-        deleteTodoId: 0
+    const deleteTodo = (id) => {
+        deleteTodoId(id);
     }
 
-    static propTypes = {
-        array: PropTypes.array,
-        deleteTodoId: PropTypes.oneOfType([PropTypes.func, PropTypes.number])
+    const template = (id, name, onClick) => {
+        return <div key={id} className={className} onClick={onClick}>
+            <span className={'blue-text text-darken-2'}>{name}</span>
+        </div>
     }
-
-    deleteTodo = (id) => {
-        this.props.deleteTodoId(id);
-    }
-
-    template = (id, name , onClick) =>{
-        return <div key={id} className={this.props.className} onClick={onClick}>
-                <span className={'blue-text text-darken-2'}>{name}</span>
-            </div>
-    }
-
-    render() {
-        const { array } = this.props;
-        const todoList = array.length !== 0 ? array.map(x => {
-            return this.template(x.id, x.name , () => { this.deleteTodo(x.id) })}) : this.template(0, 'You don\'t have any todo\'s');
-        return (
-            <Fragment>
-               {todoList}
-            </Fragment>
-        )
-    }
+    const todoList = array.length !== 0 ? array.map(x => {
+        return template(x.id, x.name, () => { deleteTodo(x.id) })
+    }) : template(0, 'You don\'t have any todo\'s');
+    return (
+        <Fragment>
+            {todoList}
+        </Fragment>
+    )
 }
+
+TodoList.defaultProps = {
+    array: [],
+    className: '',
+    deleteTodoId: 0
+}
+
+TodoList.propTypes = {
+    array: PropTypes.array,
+    className: PropTypes.string,
+    deleteTodoId: PropTypes.oneOfType([PropTypes.func, PropTypes.number])
+}
+
+export default TodoList;

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import './App.css';
+
 import TodoList from './components/TodoList';
 import AddNewTodo from './components/AddNewTodo';
+
+import 'materialize-css/dist/css/materialize.css';
+import './App.css';
 
 class App extends Component {
   constructor(props) {

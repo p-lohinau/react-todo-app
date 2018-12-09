@@ -22,8 +22,12 @@ export default class AddNewTodo extends Component {
         addTodo: PropTypes.func
     }
 
-    handleChange = ({ target }) => {
-        this.setState({ name: target.value });
+    handleChange = (event) => {
+        if (event.key === "Enter") {
+            this.handleClick();
+        } else {
+            this.setState({ name: event.target.value });
+        }
     }
 
     handleClick = () => {
@@ -36,7 +40,7 @@ export default class AddNewTodo extends Component {
         const { placeHolder, buttonName } = this.props;
         return (
             <Fragment>
-                <input placeholder={placeHolder} onChange={this.handleChange} value={this.state.name} maxLength={25}></input>
+                <input placeholder={placeHolder} onChange={this.handleChange} value={this.state.name} onKeyPress={this.handleChange} maxLength={25}></input>
                 <button className={'waves-effect waves-light btn-large width'} onClick={this.handleClick}>{buttonName}</button>
             </Fragment>
         )
