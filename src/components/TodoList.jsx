@@ -1,9 +1,12 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { deleteTodo } from '../redux/actions/todosActions';
 
 class TodoList extends Component {
     deleteTodo = (id) => {
-        this.props.deleteTodoId(id);
+        this.props.deleteTodo(id);
     }
 
     handleChange = (event, id) => {
@@ -30,10 +33,10 @@ class TodoList extends Component {
             </label>
         </div>
     }
-
     render() {
-        const { array, className } = this.props;
-        const todoList = array.length ? array.map(x => {
+        console.log(this.props);
+        const { todoList, className } = this.props;
+        const todos = todoList.length ? todoList.map(x => {
             return this.template(x, () => { this.deleteTodo(x.id) })
         }) : <div className={className}>
                 <span className="blue-text text-darken-2">You don't have any todos.</span>
@@ -41,22 +44,32 @@ class TodoList extends Component {
 
         return (
             <Fragment>
-                {todoList}
+                {todos}
             </Fragment>
         )
     }
 }
 
 TodoList.defaultProps = {
-    array: [],
-    className: '',
-    deleteTodoId: 0
+    className: ''
 }
 
 TodoList.propTypes = {
-    array: PropTypes.array,
-    className: PropTypes.string,
-    deleteTodoId: PropTypes.oneOfType([PropTypes.func, PropTypes.number])
+    className: PropTypes.string
 }
 
-export default TodoList;
+const mapStateToProps = (state) => {
+    return {
+        todoList: state.todos
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteTodo: (id) => {
+            dispatch(deleteTodo(id));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

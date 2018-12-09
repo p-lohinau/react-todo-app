@@ -1,29 +1,24 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 import TodoList from './TodoList';
 import AddNewTodo from './AddNewTodo';
 
 import 'materialize-css/dist/css/materialize.css';
-import './App.css';
+import '../assets/App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todoList: []
-    }
-  }
 
-  componentDidMount() {
-    axios.get('http://localhost:3000/todos').then(({ data }) => {
-      this.setState({
-        todoList: data
-      });
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
+  // componentDidMount() {
+  //   axios.get('http://localhost:3000/todos').then(({ data }) => {
+  //     this.setState({
+  //       todoList: data
+  //     });
+  //   }).catch((error) => {
+  //     console.log(error);
+  //   });
+  // }
 
   addTodo = (newTodo) => {
     if (!!newTodo && !!newTodo.title && newTodo !== '') {
@@ -40,24 +35,6 @@ class App extends Component {
     }
     else {
       console.log('addTodo error - wrong parameter');
-    }
-  }
-
-  deleteTodo = (id) => {
-    if (!!id || id !== '') {
-      axios.delete(`http://localhost:3000/todos/${id}`)
-        .then((response) => {
-          const updatedList = this.state.todoList.filter(x => x.id !== id);
-          this.setState({
-            todoList: updatedList
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    else {
-      console.log('deleteTodo error - wrong parameter');
     }
   }
 
@@ -82,6 +59,7 @@ class App extends Component {
   }
 
   render() {
+    console.table(this.props.todos);
     return (
       <div className="app">
         <h1>Todo list</h1>
@@ -90,13 +68,17 @@ class App extends Component {
           buttonName={'Submit'}
           placeholder={'Let\'s add new todo'} />
         <TodoList
-          array={this.state.todoList}
           className={'card-panel'}
-          deleteTodoId={this.deleteTodo}
           updateTodo={this.updateTodo} />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    todoList : state.todos
+  }
+}
+
+export default connect(mapStateToProps)(App);

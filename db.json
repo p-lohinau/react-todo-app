@@ -18,17 +18,12 @@
   },
   "todos": [
     {
-      "title": "buy some chips",
-      "id": 1,
-      "completed": false
-    },
-    {
-      "title": "buy a mikl",
+      "title": "todo 2",
       "id": 2,
       "completed": true
     },
     {
-      "title": "go to school",
+      "title": "todo 3",
       "id": 3,
       "completed": false
     }

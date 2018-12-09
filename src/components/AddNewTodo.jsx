@@ -53,11 +53,13 @@ export default class AddNewTodo extends Component {
                     onKeyPress={this.handleChange}
                     placeholder={placeholder}
                     value={this.state.title} />
+                <div className="center">
                 <button
-                    className={'waves-effect waves-light btn-large width'}
+                    className={'waves-effect waves-light btn-large'}
                     onClick={this.handleClick}>
                     {buttonName}
-                </button>
+                    </button>
+                </div>
             </Fragment>
         )
     }
