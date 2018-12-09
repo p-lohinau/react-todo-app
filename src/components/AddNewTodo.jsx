@@ -5,43 +5,59 @@ export default class AddNewTodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            id: 0
+            completed: undefined,
+            id: undefined,
+            title: undefined
         }
     }
 
     static defaultProps = {
-        buttonName: '',
-        placeHolder: '',
-        addTodo: null
+        addTodo: null,
+        buttonName: undefined,
+        placeholder: undefined
     }
 
     static propTypes = {
+        addTodo: PropTypes.func,
         buttonName: PropTypes.string,
-        placeHolder: PropTypes.string,
-        addTodo: PropTypes.func
+        placeholder: PropTypes.string,
     }
 
     handleChange = (event) => {
         if (event.key === "Enter") {
             this.handleClick();
         } else {
-            this.setState({ name: event.target.value });
+            this.setState({
+                title: event.target.value
+            });
         }
     }
 
     handleClick = () => {
         const newTodo = this.state;
-        this.setState({ id: 0, name: '' });
+        this.setState({
+            id: 0,
+            title: '',
+            completed: false
+        });
         this.props.addTodo(newTodo);
     }
 
     render() {
-        const { placeHolder, buttonName } = this.props;
+        const { buttonName, placeholder } = this.props;
         return (
             <Fragment>
-                <input placeholder={placeHolder} onChange={this.handleChange} value={this.state.name} onKeyPress={this.handleChange} maxLength={25}></input>
-                <button className={'waves-effect waves-light btn-large width'} onClick={this.handleClick}>{buttonName}</button>
+                <input
+                    maxLength={25}
+                    onChange={this.handleChange}
+                    onKeyPress={this.handleChange}
+                    placeholder={placeholder}
+                    value={this.state.title} />
+                <button
+                    className={'waves-effect waves-light btn-large width'}
+                    onClick={this.handleClick}>
+                    {buttonName}
+                </button>
             </Fragment>
         )
     }
