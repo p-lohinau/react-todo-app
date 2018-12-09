@@ -1,0 +1,36 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "todos": [
+    {
+      "title": "buy some chips",
+      "id": 1,
+      "completed": false
+    },
+    {
+      "title": "buy a mikl",
+      "id": 2,
+      "completed": true
+    },
+    {
+      "title": "go to school",
+      "id": 3,
+      "completed": false
+    }
+  ]
+}

@@ -1,25 +1,50 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 
-const TodoList = ({ array, className, deleteTodoId }) => {
-
-    const deleteTodo = (id) => {
-        deleteTodoId(id);
+class TodoList extends Component {
+    deleteTodo = (id) => {
+        this.props.deleteTodoId(id);
     }
 
-    const template = (id, name, onClick) => {
-        return <div key={id} className={className} onClick={onClick}>
-            <span className={'blue-text text-darken-2'}>{name}</span>
+    handleChange = (event, id) => {
+        this.props.updateTodo(id, event.target.checked);
+    }
+
+    template = ({ id, title, completed }, onClick) => {
+        return <div key={id} className={this.props.className}>
+            <label>
+                <input
+                    checked={completed}
+                    data-role='check'
+                    onChange={(event) => this.handleChange(event, id)}
+                    type='checkbox' />
+                <span
+                    className={'blue-text text-darken-2'}>
+                    {title}
+                </span>
+                <button
+                    className='waves-effect waves-light btn right red'
+                    onClick={onClick}>
+                    <i className="material-icons">delete</i>
+                </button>
+            </label>
         </div>
     }
-    const todoList = array.length !== 0 ? array.map(x => {
-        return template(x.id, x.name, () => { deleteTodo(x.id) })
-    }) : template(0, 'You don\'t have any todo\'s');
-    return (
-        <Fragment>
-            {todoList}
-        </Fragment>
-    )
+
+    render() {
+        const { array, className } = this.props;
+        const todoList = array.length ? array.map(x => {
+            return this.template(x, () => { this.deleteTodo(x.id) })
+        }) : <div className={className}>
+                <span className="blue-text text-darken-2">You don't have any todos.</span>
+            </div>;
+
+        return (
+            <Fragment>
+                {todoList}
+            </Fragment>
+        )
+    }
 }
 
 TodoList.defaultProps = {
